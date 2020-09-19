@@ -59,7 +59,7 @@ function Home() {
                 <>
                   <Button>View</Button>
                   <Button color="N" onClick={() => handleClick(idx)}>
-                    <Link href={`/productDetail/${data.id}`}>
+                    <Link href={`/product-detail/${data.id}`}>
                       Add to Cart
                     </Link>
                   </Button>
