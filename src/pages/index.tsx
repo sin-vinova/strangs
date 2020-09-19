@@ -9,6 +9,7 @@ import { GET_PRODUCTS } from '../graphql/product/product.query'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { Card } from '../components/ui-kits/Card'
+import Link from 'next/link'
 
 export const HomeContainer = styled.div``
 
@@ -40,8 +41,6 @@ function Home() {
   const handleClick = (idx) => {
     console.log('id', products[idx].id)
   }
-  console.log('products', products)
-
 
   return (
     <>
@@ -59,7 +58,11 @@ function Home() {
               buttonGroups={
                 <>
                   <Button>View</Button>
-                  <Button onClick={() => handleClick(idx)}>Add to Cart</Button>
+                  <Button color="N" onClick={() => handleClick(idx)}>
+                    <Link href={`/productDetail/${data.id}`}>
+                      Add to Cart
+                    </Link>
+                  </Button>
                 </>
               }
             >

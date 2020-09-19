@@ -19,6 +19,13 @@ export const StyledButton = styled.button`
   text-transform: none;
   text-indent: 0px;
   text-shadow: none;
+  background-color: ${(props) => (props.color ? 'blue' : '')};
+  color: ${(props) => (props.color ? 'white' : '')};
+
+  & > a {
+    color: ${(props) => (props.color ? 'white' : '')};
+    list-style-type: none;
+  }
 
   &:not(:disabled):not(.disabled) {
     cursor: pointer;
