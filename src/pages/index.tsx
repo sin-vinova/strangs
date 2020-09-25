@@ -63,6 +63,7 @@ function Home() {
                       Add to Cart
                     </Link>
                   </Button>
+                  <button onClick={() => {throw new Error}}>Break the world</button>;
                 </>
               }
             >

@@ -11,6 +11,12 @@ const ProductDetail = () => {
     // if (loading) return <h1>Loading...</h1>
     // const product = data
     const router = useRouter()
+    // const methodDoesNotExist = () => {
+    //     var features = "location=yes, resizeable=yes";
+    //     function openNewWindow() {
+    //         var newWindow = window.openWindow("https://viblo.asia", "Viblo window", features);
+    //     }
+    // }
     return (
         <div>
             {router.query.idProduct}

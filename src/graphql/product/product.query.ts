@@ -37,3 +37,4 @@ export const GET_PRODUCT_DETAIL = gql`
     }
   }
 `
+// query GetProducts {  getProductDetail(input: {    id: "26131596"  }) {    description    name    id  images    price    promotionPercent    finalPrice    sku  }}
