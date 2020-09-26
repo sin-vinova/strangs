@@ -10,6 +10,7 @@ import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { Card } from '../components/ui-kits/Card'
 import Link from 'next/link'
+import Router from 'next/router'
 
 export const HomeContainer = styled.div``
 
@@ -38,10 +39,6 @@ function Home() {
     return <p>Not found</p>
   }
 
-  const handleClick = (idx) => {
-    console.log('id', products[idx].id)
-  }
-
   return (
     <>
       <Head>
@@ -57,13 +54,11 @@ function Home() {
               imageURL={data.imgUrl}
               buttonGroups={
                 <>
-                  <Button>View</Button>
-                  <Button color="N" onClick={() => handleClick(idx)}>
-                    <Link href={`/product-detail/${data.id}`}>
+                  <Button onClick={() => Router.push(`/product-detail/${data.id}`)}>View</Button>
+                  <Button color="N">
                       Add to Cart
-                    </Link>
                   </Button>
-                  <button onClick={() => {throw new Error}}>Break the world</button>;
+                  {/* <button onClick={() => {throw new Error}}>Break the world</button>; */}
                 </>
               }
             >

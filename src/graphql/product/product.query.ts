@@ -33,7 +33,6 @@ export const GET_PRODUCT_DETAIL = gql`
       imgUrlMob
       image
       images
-      media
     }
   }
 `
