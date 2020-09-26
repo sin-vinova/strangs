@@ -10,7 +10,7 @@ import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { Card } from '../components/ui-kits/Card'
 import Link from 'next/link'
-import Router from 'next/router'
+import Router from 'next/router';
 
 export const HomeContainer = styled.div``
 
