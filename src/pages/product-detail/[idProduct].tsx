@@ -4,19 +4,12 @@ import { GET_PRODUCT_DETAIL } from '../../graphql/product/product.query';
 import withApollo from '../../utils/withApollo'
 import { useRouter } from 'next/router'
 import styled from 'styled-components';
-import {
-    Carousel,
-    CarouselItem,
-    CarouselControl,
-    CarouselIndicators,
-    CarouselCaption,
-} from 'reactstrap';
-import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
+import Slider from 'react-slick'
+import { Header } from '../../components/Header'
+import Layout from '../../components/Layout/Layout'
 
 
 const ProductDetail = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [animating, setAnimating] = useState(false);
     const router = useRouter()
     const { idProduct } = router.query;
 
@@ -37,79 +30,83 @@ const ProductDetail = () => {
         return <p>Not found</p>
     }
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
+    };
+
     const { images, name, finalPrice, price, promotionPercent } = products
 
-    const next = () => {
-        if (animating) return;
-        const nextIndex = activeIndex === images.length - 1 ? 0 : activeIndex + 1;
-        setActiveIndex(nextIndex);
-    }
-
-    const previous = () => {
-        if (animating) return;
-        const nextIndex = activeIndex === 0 ? images.length - 1 : activeIndex - 1;
-        setActiveIndex(nextIndex);
-    }
-
-    const goToIndex = (newIndex) => {
-        if (animating) return;
-        setActiveIndex(newIndex);
-    }
-
-    const slides = images.map((item, idx) => {
+    function SampleNextArrow(props) {
+        const { className, style, onClick } = props;
         return (
-            <CarouselItem
-                onExiting={() => setAnimating(true)}
-                onExited={() => setAnimating(false)}
-                key={idx}
-            >
-                <img src={`https://media3.scdn.vn/${item}`} />
-                <CarouselCaption captionText={'asas'} captionHeader={'asas'} />
-            </CarouselItem>
+            <div
+                className={className}
+                style={{ ...style, display: "block", background: "red" }}
+                onClick={onClick}
+            />
         );
-    });
+    }
+
+    function SamplePrevArrow(props) {
+        const { className, style, onClick } = props;
+        return (
+            <div
+                className={className}
+                style={{ ...style, display: "block", background: "green" }}
+                onClick={onClick}
+            />
+        );
+    }
 
     return (
         <Wrapper>
-            <Container>
-                <Title>
-                    Product Detail
-                </Title>
-                <ProductContainer>
-                    <ImageContainer>
-                        <CustomCarousel
-                            activeIndex={activeIndex}
-                            next={next}
-                            previous={previous}
-                        >
-                            <CarouselIndicators items={images} activeIndex={activeIndex} onClickHandler={goToIndex} />
-                            {slides}
-                            <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
-                            <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
-                        </CustomCarousel>
-                        {/* <Image src={`https://media3.scdn.vn/${images[0]}`} /> */}
-                    </ImageContainer>
-                    <DetailContainer>
-                        <Name>{name}</Name>
-                        <Price>
-                            <FinalPrice>
-                                {finalPrice}
-                            </FinalPrice>
-                            {promotionPercent >= 0 &&
-                                <>
-                                    <OriginPrice>
-                                        {price}
-                                    </OriginPrice>
-                                    <PromotionPercent>
-                                        {promotionPercent}% Off
-                                    </PromotionPercent>
-                                </>
-                            }
-                        </Price>
-                    </DetailContainer>
-                </ProductContainer>
-                <div dangerouslySetInnerHTML={{ __html: products.description }} />
-            </Container>
+            <Header />
+            <Layout>
+                <Container>
+                    <Title>
+                        Product Detail
+                    </Title>
+                    <ProductContainer>
+                        <ImageContainer>
+                            <Slider {...settings}>
+                                {images.map((img, idx) => (
+                                    <div key={idx}>
+                                        <Image src={`https://media3.scdn.vn/${img}`} />
+                                    </div>
+                                ))}
+                            </Slider>
+                        </ImageContainer>
+                        <DetailContainer>
+                            <Name>{name}</Name>
+                            <Price>
+                                <FinalPrice>
+                                    {finalPrice}
+                                </FinalPrice>
+                                {promotionPercent >= 0 &&
+                                    <>
+                                        <OriginPrice>
+                                            {price}
+                                        </OriginPrice>
+                                        <PromotionPercent>
+                                            {promotionPercent}% Off
+                                        </PromotionPercent>
+                                    </>
+                                }
+                            </Price>
+                            <div>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </div>
+                        </DetailContainer>
+                    </ProductContainer>
+                    <div dangerouslySetInnerHTML={{ __html: products.description }} />
+                </Container>
+            </Layout>
         </Wrapper>
     )
 }
@@ -145,6 +142,7 @@ const ProductContainer = styled.div`
 
 const ImageContainer = styled.div`
     width: 50%;
+    padding: 10px 25px 20px;
 `
 const Image = styled.img`
     max-width: 100%;
@@ -175,10 +173,4 @@ const OriginPrice = styled.div`
 const PromotionPercent = styled.div`
     font-size: 18px;
     color: #1abc9c;
-`
-
-const CustomCarousel = styled(Carousel)`
-    img {
-        max-width: 100%;
-    }
 `

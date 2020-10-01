@@ -2,6 +2,8 @@
 import type { AppProps /*, AppContext */ } from 'next/app';
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 Sentry.init({
     dsn: "https://bb9cf87a2ed949f79402d493b8d8cc1a@o450208.ingest.sentry.io/5434448",
